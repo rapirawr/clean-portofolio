@@ -10,21 +10,19 @@ export function Hero() {
     <section id="hero" className="hero">
       <div className="hero__bg">
         <div className="hero__gradient" />
-        <div className="hero__grid" />
         <SpiralDots />
       </div>
       <div className="hero__content">
-        <div className="hero__badge reveal-text">
-          <span className="hero__badge-dot" />
-          {t("hero.status")}
+        <div className="hero__header reveal-text">
+          <div className="hero__badge">
+            <span className="hero__badge-dot" />
+            {t("hero.status")}
+          </div>
+          <span className="hero__sep" style={{ color: "var(--accent)" }}>/</span>
+          <p className="hero__greeting">{t("hero.greeting")}</p>
         </div>
         
         <div className="hero__typography">
-          <div className="hero__greeting-wrap">
-             <span className="hero__greeting-line"></span>
-             <p className="hero__greeting">{t("hero.greeting")}</p>
-          </div>
-          
           <h1 className="hero__name">
             <span className="name-main">{t("hero.name")}</span>
             <span className="name-styled">Developer.</span>
@@ -33,22 +31,20 @@ export function Hero() {
           <div className="hero__description">
             <p className="hero__tagline">
               ENGINEERING <span className="serif-text">HIGH-FIDELITY</span> <br />
-              DIGITAL EXPERIENCES <br />
-              THROUGH <span className="accent-text">CODE</span> AND <span className="accent-text">DESIGN</span>.
+              DIGITAL EXPERIENCES
             </p>
           </div>
         </div>
 
         <div className="hero__actions">
-          <Magnetic strength={0.3}>
+          <Magnetic strength={0.2}>
             <a href="#projects" className="btn btn--primary" onClick={(e) => { e.preventDefault(); document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }); }}>
               {t("hero.cta.projects")}
-              <ArrowDown size={16} />
             </a>
           </Magnetic>
-          <Magnetic strength={0.3}>
+          <Magnetic strength={0.2}>
             <a href="/cv" target="_blank" className="btn btn--outline">
-              View CV
+              Resume
             </a>
           </Magnetic>
         </div>

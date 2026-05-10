@@ -14,8 +14,7 @@ export function Credentials() {
     <section id="credentials" className="section credentials">
       <div className="container">
         <div className="section-header">
-          <span className="section-label">{t("credentials.label")}</span>
-          <h2 className="section-title">{t("credentials.title")}</h2>
+          <h2 className="section-title">{t("credentials.label")}</h2>
         </div>
         <p className="credentials__desc">{t("credentials.desc")}</p>
         <div className="credentials__preview">

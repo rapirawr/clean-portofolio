@@ -113,8 +113,7 @@ export function Experience() {
     <section id="experience" className="section roadmap-section reveal" ref={containerRef}>
       <div className="container">
         <div className="section-header">
-          <span className="section-label">{t("exp.label")}</span>
-          <h2 className="section-title">My Journey Roadmap</h2>
+          <h2 className="section-title">{t("exp.label")}</h2>
         </div>
 
         <div className="roadmap" style={{ 
@@ -138,25 +137,17 @@ export function Experience() {
           >
             <svg className="roadmap__path" viewBox="0 0 100 1000" preserveAspectRatio="none">
               <path 
+                className="roadmap__path-base"
                 d="M50,0 Q70,250 50,500 T50,1000" 
                 fill="none" 
-                stroke="var(--border)" 
-                strokeWidth="2" 
-                strokeDasharray="12 12"
                 strokeLinecap="round"
-                opacity="0.15"
               />
               <path 
                 ref={pathRef}
                 className="roadmap__path--active"
                 d="M50,0 Q70,250 50,500 T50,1000" 
                 fill="none" 
-                stroke="var(--accent)" 
-                strokeWidth="4"
                 strokeLinecap="round"
-                style={{ 
-                  filter: 'drop-shadow(0 0 10px var(--accent-soft))'
-                }}
               />
             </svg>
           </div>

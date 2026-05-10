@@ -46,7 +46,7 @@ export function Skills() {
     <section id="skills" className="section skills reveal">
       <div className="container">
         <div className="section-header">
-          <span className="section-label">{t("skills.label")}</span>
+          <h2 className="section-title">{t("skills.label")}</h2>
         </div>
         <div className="skills__grid">
           {categories.map((cat) => (

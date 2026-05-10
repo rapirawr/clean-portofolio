@@ -26,8 +26,7 @@ export function Contact() {
     <section id="contact" className="section contact reveal">
       <div className="container">
         <div className="section-header">
-          <span className="section-label">{t("contact.label")}</span>
-          <h2 className="section-title">{t("contact.title")}</h2>
+          <h2 className="section-title">{t("contact.label")}</h2>
           <p className="section-subtitle">{t("contact.subtitle")}</p>
         </div>
 

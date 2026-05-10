@@ -8,7 +8,8 @@ export function About() {
     <section id="about" className="about-futuristic reveal">
       {/* Angled background line */}
       <svg className="about-f__bg-line" preserveAspectRatio="none" viewBox="0 0 1000 100">
-        <path d="M0,80 L380,80 L480,20 L1000,20" fill="none" stroke="currentColor" strokeWidth="2" />
+        <path d="M0,80 L380,80 L480,20 L1000,20" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.2" />
+        <path className="about-f__neon-line" d="M0,80 L380,80 L480,20 L1000,20" fill="none" stroke="var(--accent)" strokeWidth="2" />
       </svg>
       
       <div className="container about-f__container">
@@ -24,7 +25,7 @@ export function About() {
           </h2>
 
           <div className="about-f__card">
-            <h3 className="about-f__card-val">3+ Years</h3>
+            <h3 className="about-f__card-val"><br />3+ Years</h3>
             <span className="about-f__card-label">Experience</span>
             <p className="about-f__card-desc">
               {t("about.description")}

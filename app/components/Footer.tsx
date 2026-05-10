@@ -41,8 +41,12 @@ export function Footer() {
       <div className="container footer__inner reveal">
         <div className="footer__main">
           <div className="footer__brand">
-            <h2 className="footer__logo-large">
-              Rafi<span className="footer__logo-dot">.</span>
+            <h2 className="footer__logo-dynamic">
+              <span className="char">R</span>
+              <span className="char">a</span>
+              <span className="char">f</span>
+              <span className="char">i</span>
+              <span className="footer__logo-dot">.</span>
             </h2>
             <p className="footer__tagline">
               {t("hero.tagline") || "Crafting high-end digital experiences with precision and passion."}

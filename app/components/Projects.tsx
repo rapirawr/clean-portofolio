@@ -172,31 +172,47 @@ export function Projects() {
             <button className="project-modal__close" onClick={() => setSelectedProject(null)} aria-label="Close">
               <X size={20} />
             </button>
-            <div className="project-modal__gallery">
-              {selectedProject.gallery.map((img, i) => (
-                <img key={i} src={img} alt={`${t(selectedProject.titleKey)} screenshot ${i + 1}`} loading="lazy" />
-              ))}
-            </div>
-            <div className="project-modal__info">
-              <span className="project-modal__category">{t(selectedProject.categoryKey)}</span>
-              <h2 className="project-modal__title">{t(selectedProject.titleKey)}</h2>
-              <p className="project-modal__desc">{t(selectedProject.descKey)}</p>
-              <div className="project-modal__tags">
-                {selectedProject.tech.split(" / ").map((tag) => (
-                  <span key={tag} className="tag">{tag}</span>
-                ))}
+            
+            <div className="project-modal__layout">
+              <div className="project-modal__visual">
+                <div className="project-modal__gallery">
+                  <img src={selectedProject.gallery[0]} alt={t(selectedProject.titleKey)} loading="lazy" />
+                </div>
               </div>
-              {selectedProject.link && (
-                <a
-                  href={selectedProject.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn--primary"
-                >
-                  Visit Site
-                  <ExternalLink size={16} />
-                </a>
-              )}
+              
+              <div className="project-modal__body">
+                <div className="project-modal__header">
+                  <span className="project-modal__category">{t(selectedProject.categoryKey)}</span>
+                  <h2 className="project-modal__title">{t(selectedProject.titleKey)}</h2>
+                </div>
+                
+                <div className="project-modal__details">
+                  <p className="project-modal__desc">{t(selectedProject.descKey)}</p>
+                  
+                  <div className="project-modal__tags">
+                    {selectedProject.tech.split(" / ").map((tag) => (
+                      <span key={tag} className="tag">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="project-modal__actions">
+                  {selectedProject.link && (
+                    <a
+                      href={selectedProject.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn--primary project-modal__btn"
+                    >
+                      Visit Project
+                      <ExternalLink size={16} />
+                    </a>
+                  )}
+                  <button className="btn btn--outline project-modal__btn" onClick={() => setSelectedProject(null)}>
+                    Close
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>

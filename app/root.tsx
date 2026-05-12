@@ -27,6 +27,8 @@ export const links: Route.LinksFunction = () => [
     href: "https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital@1&display=swap",
   },
   { rel: "icon", type: "image/png", href: "/images/favicon.png" },
+  { rel: "apple-touch-icon", href: "/images/favicon.png" },
+  { rel: "manifest", href: "/manifest.webmanifest" },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {

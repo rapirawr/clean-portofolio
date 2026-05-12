@@ -25,15 +25,15 @@ export function Hero() {
         <div className="hero__typography">
           <h1 className="hero__name">
             <span className="name-main">{t("hero.name")}</span>
-            <span className="name-styled">Developer.</span>
+            {/* <span className="name-styled">Developer.</span> */}
           </h1>
           
-          <div className="hero__description">
+          {/* <div className="hero__description">
             <p className="hero__tagline">
               ENGINEERING <span className="serif-text">HIGH-FIDELITY</span> <br />
               DIGITAL EXPERIENCES
             </p>
-          </div>
+          </div> */}
         </div>
 
         <div className="hero__actions">

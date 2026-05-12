@@ -44,7 +44,7 @@ export function Hero() {
           </Magnetic>
           <Magnetic strength={0.2}>
             <a href="/cv" target="_blank" className="btn btn--outline">
-              Resume
+              {t("hero.cta.resume")}
             </a>
           </Magnetic>
         </div>

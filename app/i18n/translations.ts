@@ -18,15 +18,23 @@ export const translations: Record<Locale, Record<string, string>> = {
     "hero.tagline": "Building scalable, high-performance web applications with refined aesthetics.",
     "hero.cta.projects": "View Projects",
     "hero.cta.cv": "Download CV",
+    "hero.cta.resume": "Resume",
     "hero.status": "Available for work",
 
     // About
     "about.label": "About",
     "about.title": "A developer who cares about craft",
+    "about.titleHeader": "ABOUT ME",
     "about.description": "I am a Fullstack Developer dedicated to building scalable, high-performance web applications with refined aesthetics. Based in Indonesia, I focus on creating digital experiences that blend technical excellence with thoughtful design.",
     "about.years": "Years Experience",
     "about.projectCount": "Projects Built",
     "about.certCount": "Certifications",
+
+    // Statement
+    "statement.premiumEnabled": "premium-enabled",
+    "statement.standardReady": "standard-ready",
+    "statement.aesthetic": "aesthetic",
+    "statement.ready": "Im ready when you're ready",
 
     // Experience
     "exp.label": "Experience & Education",
@@ -121,15 +129,23 @@ export const translations: Record<Locale, Record<string, string>> = {
     "hero.tagline": "Membangun aplikasi web yang skalabel dan berperforma tinggi dengan estetika yang halus.",
     "hero.cta.projects": "Lihat Proyek",
     "hero.cta.cv": "Unduh CV",
+    "hero.cta.resume": "Resume",
     "hero.status": "Tersedia untuk bekerja",
 
     // About
     "about.label": "Tentang",
     "about.title": "Developer yang peduli pada kualitas",
+    "about.titleHeader": "TENTANG SAYA",
     "about.description": "Saya adalah Fullstack Developer yang berdedikasi untuk membangun aplikasi web skalabel berperforma tinggi dengan estetika yang halus. Berbasis di Indonesia, saya fokus menciptakan pengalaman digital yang memadukan keunggulan teknis dengan desain yang cermat.",
     "about.years": "Tahun Pengalaman",
     "about.projectCount": "Proyek Selesai",
     "about.certCount": "Sertifikasi",
+
+    // Statement
+    "statement.premiumEnabled": "premium-enabled",
+    "statement.standardReady": "standard-ready",
+    "statement.aesthetic": "estetika",
+    "statement.ready": "Kami siap kapanpun Anda siap",
 
     // Experience
     "exp.label": "Pengalaman & Pendidikan",

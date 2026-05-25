@@ -15,41 +15,40 @@
 
 /* Light Theme - Clean and Crisp */
 [data-theme="light"] {
-  --bg: #ffffff;
-  --bg-secondary: #f8fafc;
-  --bg-card: #ffffff;
-  --border: #e2e8f0;
-  --text: #0f172a;
-  --text-secondary: #64748b;
-  --accent: #ff2d20; /* Laravel Red */
+  --bg: #f5f5f0;
+  --bg-secondary: #eeede8;
+  --bg-card: #fafaf7;
+  --border: #ddddd6;
+  --text: #1a1a18;
+  --text-secondary: #6b6b63;
+  --accent: #ff2d20;
   --accent-hover: #dc2626;
   --accent-soft: rgba(255, 45, 32, 0.08);
-  --nav-bg: rgba(255, 255, 255, 0.85);
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-  --hero-glow: radial-gradient(circle at top center, rgba(255, 45, 32, 0.08) 0%, transparent 60%);
-  --grid-color: rgba(15, 23, 42, 0.04);
+  --nav-bg: rgba(245, 245, 240, 0.75);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+  --hero-glow: radial-gradient(circle at top center, rgba(255, 45, 32, 0.07) 0%, transparent 60%);
+  --grid-color: rgba(15, 23, 42, 0.05);
 }
 
 /* Dark Theme - Softer, less dense */
 [data-theme="dark"] {
-  --bg: #000000;
-  --bg-secondary: #0a0a0a;
-  --bg-card: #000000;
-  
-  --border: #1f1f23;
-  --text: #f3f4f6;
-  --text-secondary: #9ca3af;
+  --bg: #111110;
+  --bg-secondary: #1a1a18;
+  --bg-card: #161614;
+  --border: #2a2a27;
+  --text: #ededea;
+  --text-secondary: #8a8a82;
   --accent: #ff4500;
   --accent-hover: #ef4444;
-  --accent-soft: rgba(255, 69, 0, 0.15);
-  --nav-bg: rgba(0, 0, 0, 0.85);
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
-  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
-  --hero-glow: radial-gradient(circle at top center, rgba(255, 69, 0, 0.15) 0%, transparent 50%);
-  --grid-color: rgba(255, 255, 255, 0.03);
+  --accent-soft: rgba(255, 69, 0, 0.12);
+  --nav-bg: rgba(17, 17, 16, 0.75);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.45);
+  --hero-glow: radial-gradient(circle at top center, rgba(255, 69, 0, 0.12) 0%, transparent 50%);
+  --grid-color: rgba(255, 255, 255, 0.025);
 }
 
 /* ===== RESET ===== */
@@ -152,8 +151,9 @@ input, textarea { font: inherit; color: inherit; }
 .navbar { 
   position: fixed; 
   top: 24px; 
-  left: 50%; 
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   width: calc(100% - 48px);
   max-width: var(--max-w);
   z-index: 100; 
@@ -164,14 +164,15 @@ input, textarea { font: inherit; color: inherit; }
 }
 .navbar-scrolled { 
   top: 16px;
-  background: rgba(255, 255, 255, 0.3); 
+  background: var(--nav-bg); 
   backdrop-filter: blur(20px); 
   -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0);
+  border-color: var(--border);
+  box-shadow: var(--shadow);
   padding: 8px 24px; 
 }
 [data-theme="dark"] .navbar-scrolled {
-  background: rgba(10, 10, 10, 0.5);
+  background: var(--nav-bg);
 }
 .navbar__inner { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
 .navbar__logo img { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border); }
@@ -382,6 +383,23 @@ input, textarea { font: inherit; color: inherit; }
   color: var(--text);
   margin-bottom: 24px;
 }
+.statement__word {
+  display: inline-block;
+  color: var(--accent);
+  animation: wordSwap 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes wordSwap {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.95);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
 .statement__subtitle {
   font-size: 1.25rem;
   color: var(--text-secondary);
@@ -405,7 +423,7 @@ input, textarea { font: inherit; color: inherit; }
   width: 72px;
   height: 40px;
   border-radius: 40px;
-  background: var(--border);
+  background: #d4d4d4;
   transition: background 0.3s var(--ease);
   position: relative;
   border: 1px solid rgba(0,0,0,0.1);

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLanguage } from "~/context/LanguageContext";
+import { useTheme } from "~/context/ThemeContext";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { Menu, X } from "lucide-react";
@@ -15,6 +16,7 @@ const navItems = [
 
 export function Navbar() {
   const { t } = useLanguage();
+  const { resolvedTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -40,7 +42,12 @@ export function Navbar() {
       <nav className={`navbar ${scrolled ? "navbar-scrolled" : ""}`} id="navbar">
         <div className="navbar__inner">
           <a href="#hero" className="navbar__logo" onClick={() => handleNavClick("#hero")}>
-            <img src="/images/logo.png" alt="Rafi Abdillah" width={32} height={32} />
+            <img
+              src={resolvedTheme === "light" ? "/images/logo2.png" : "/images/logo.png"}
+              alt="Rafi Abdillah"
+              width={32}
+              height={32}
+            />
           </a>
 
           <ul className="navbar__links">

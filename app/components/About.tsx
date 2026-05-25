@@ -21,7 +21,9 @@ export function About() {
           </div> */}
           
           <h2 className="about-f__title">
-            ABOUT <br/> ME
+            {t("about.titleHeader").split(" ").map((word, i, arr) => (
+              <span key={i}>{word}{i < arr.length - 1 && <br />}</span>
+            ))}
           </h2>
 
           <div className="about-f__card">

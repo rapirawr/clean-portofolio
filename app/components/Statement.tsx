@@ -10,7 +10,12 @@ export function Statement() {
       <div className="container">
         <h2 className="statement__heading">
           {t("statement.headText")}{" "} <br />
-          {isToggled ? t("statement.statEnabled") : t("statement.statDisabled")}{" "}
+          <span
+            key={isToggled ? "enabled" : "disabled"}
+            className="statement__word"
+          >
+            {isToggled ? t("statement.statEnabled") : t("statement.statDisabled")}
+          </span>{" "}
           <button
             className={`inline-toggle ${isToggled ? "inline-toggle--active" : ""}`}
             onClick={() => setIsToggled(!isToggled)}

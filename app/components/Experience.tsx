@@ -63,14 +63,13 @@ export function Experience() {
       const rect = container.getBoundingClientRect();
       const windowHeight = window.innerHeight;
       
-      // 1. DYNAMIC THRESHOLD CALCULATION
-      // The tip of the orange line is visually at 80% of viewport
-      const drawingTipY = windowHeight * 0.8;
+      // Drawing tip at 60% of viewport, starts when roadmap is well in view
+      const drawingTipY = windowHeight * 0.6;
       
       const elementTop = rect.top;
       const elementHeight = rect.height;
       
-      // Calculate drawing progress
+      // Progress starts only when top of roadmap div reaches drawingTipY
       let progress = (drawingTipY - elementTop) / elementHeight;
       progress = Math.max(0, Math.min(1, progress));
       
@@ -78,13 +77,12 @@ export function Experience() {
       path.style.strokeDasharray = `${pathLength}`;
       path.style.strokeDashoffset = `${pathLength * (1 - progress)}`;
 
-      // 2. PARALLAX CALCULATION (needed for activation sync)
+      // Parallax
       const centerOffset = (elementTop + elementHeight / 2) - (windowHeight / 2);
       const parallaxMove = Math.max(-40, Math.min(40, centerOffset * -0.1)); 
       svgWrapper.style.transform = `translateX(-50%) translateY(${parallaxMove}px)`;
 
-      // 3. SYNCED ACTIVATION LOGIC
-      // We must subtract the parallaxMove from the node's position to sync with the moving SVG
+      // Node activation synced with drawing tip
       const newActiveNodes = timelineItems.map((_, index) => {
         const node = nodeRefs.current[index];
         if (!node) return false;
@@ -92,8 +90,6 @@ export function Experience() {
         const nodeRect = node.getBoundingClientRect();
         const nodeCenterY = nodeRect.top + nodeRect.height / 2;
         
-        // SYNC KEY: The drawing line is actually shifted by parallaxMove.
-        // So the "visual" tip position relative to the static nodes is drawingTipY - parallaxMove
         return (drawingTipY - parallaxMove) >= nodeCenterY;
       });
       
@@ -110,13 +106,13 @@ export function Experience() {
   }, []);
 
   return (
-    <section id="experience" className="section roadmap-section reveal" ref={containerRef}>
+    <section id="experience" className="section roadmap-section reveal">
       <div className="container">
         <div className="section-header">
           <h2 className="section-title">{t("exp.label")}</h2>
         </div>
 
-        <div className="roadmap" style={{ 
+        <div className="roadmap" ref={containerRef} style={{ 
           position: 'relative', 
           overflow: 'hidden', 
           padding: '120px 0', 

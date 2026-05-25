@@ -49,7 +49,7 @@ export function Footer() {
               <span className="footer__logo-dot">.</span>
             </h2>
             <p className="footer__tagline">
-              {t("hero.tagline") || "Crafting high-end digital experiences with precision and passion."}
+              {t("hero.tagline") || "Fullstack developer based in Indonesia."}
             </p>
           </div>
 
@@ -77,7 +77,7 @@ export function Footer() {
 
         <div className="footer__bottom">
           <div className="footer__copyright">
-            © {new Date().getFullYear()} — Rafi Abdillah F.
+            © {new Date().getFullYear()} Rafi Abdillah F.
           </div>
           <div className="footer__meta">
             <span>{t("footer.rights")}</span>

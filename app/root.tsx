@@ -37,7 +37,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Rafi Abdillah F — Fullstack Developer</title>
+        <title>Rafi Abdillah F | Fullstack Developer</title>
         <meta name="description" content="Portfolio of Rafi Abdillah F. Building modern web, UI/UX, and digital projects." />
         <meta name="theme-color" content="#0a0a0a" />
         <Meta />

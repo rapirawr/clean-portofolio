@@ -29,13 +29,16 @@ export const translations: Record<Locale, Record<string, string>> = {
     "about.years": "Years Experience",
     "about.projectCount": "Projects Built",
     "about.certCount": "Certifications",
+    "about.yearsCount": "3+ Years",
+    "about.yearsLabel": "Experience",
 
     // Statement
-    "statement.premiumEnabled": "premium-enabled",
-    "statement.standardReady": "standard-ready",
-    "statement.aesthetic": "aesthetic",
-    "statement.ready": "Im ready when you're ready",
-
+    "statement.headText": "Build web app with",
+    "statement.statEnabled": "Aesthetic",
+    "statement.statDisabled": "Static",
+    "statement.on": "design",
+    "statement.ready": "I'm ready when you're ready",
+    
     // Experience
     "exp.label": "Experience & Education",
     "exp1.date": "2024 — Present",
@@ -62,6 +65,10 @@ export const translations: Record<Locale, Record<string, string>> = {
     "projects.viewAll": "View All Projects",
     "projects.visitSite": "Visit Site",
     "projects.viewDetails": "View Details",
+    "projects.desc": "Explore my portfolio of web applications, mobile apps, and digital infrastructure projects built with modern technologies.",
+    "projects.exploreCredentials": "Explore credentials",
+    "projects.visitProject": "Visit Project",
+    "projects.close": "Close",
 
     // Project descriptions
     "project1.title": "KAZE POS",
@@ -140,12 +147,15 @@ export const translations: Record<Locale, Record<string, string>> = {
     "about.years": "Tahun Pengalaman",
     "about.projectCount": "Proyek Selesai",
     "about.certCount": "Sertifikasi",
+    "about.yearsCount": "3+ Tahun",
+    "about.yearsLabel": "Pengalaman",
 
     // Statement
-    "statement.premiumEnabled": "premium-enabled",
-    "statement.standardReady": "standard-ready",
-    "statement.aesthetic": "estetika",
-    "statement.ready": "Kami siap kapanpun Anda siap",
+    "statement.headText": "Bangun web app dengan",
+    "statement.statEnabled": "Estetik",
+    "statement.statDisabled": "Statis",
+    "statement.on": "desain",
+    "statement.ready": "Saya siap kapanpun Anda siap",
 
     // Experience
     "exp.label": "Pengalaman & Pendidikan",
@@ -173,6 +183,10 @@ export const translations: Record<Locale, Record<string, string>> = {
     "projects.viewAll": "Lihat Semua Proyek",
     "projects.visitSite": "Kunjungi Situs",
     "projects.viewDetails": "Lihat Detail",
+    "projects.desc": "Jelajahi portofolio aplikasi web, mobile, dan proyek infrastruktur digital yang dibangun dengan teknologi modern.",
+    "projects.exploreCredentials": "Jelajahi sertifikat",
+    "projects.visitProject": "Kunjungi Proyek",
+    "projects.close": "Tutup",
 
     // Project descriptions
     "project1.title": "KAZE POS",

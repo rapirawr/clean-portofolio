@@ -25,8 +25,8 @@ export function About() {
           </h2>
 
           <div className="about-f__card">
-            <h3 className="about-f__card-val"><br />3+ Years</h3>
-            <span className="about-f__card-label">Experience</span>
+            <h3 className="about-f__card-val"><br />{t("about.yearsCount")}</h3>
+            <span className="about-f__card-label">{t("about.yearsLabel")}</span>
             <p className="about-f__card-desc">
               {t("about.description")}
             </p>

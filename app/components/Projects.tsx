@@ -74,7 +74,7 @@ const projects: Project[] = [
     titleKey: "project6.title",
     categoryKey: "project6.category",
     descKey: "project6.desc",
-    tech: "Next.js / WebAssembly / AI",
+    tech: "HTML / CSS / JavaScript",
     image: "/images/projects/convertifly/convertifly.png",
     gallery: ["/images/projects/convertifly/convertifly.png", "/images/projects/convertifly/convertifly1.png", "/images/projects/convertifly/convertifly2.png"],
     link: "https://convertifly-xyz.vercel.app/",
@@ -95,10 +95,10 @@ export function Projects() {
           <div className="projects-content">
             <h2 className="projects-title">{t("projects.label")}</h2>
             <p className="projects-desc">
-              Explore my portfolio of web applications, mobile apps, and digital infrastructure projects built with modern technologies.
+              {t("projects.desc")}
             </p>
             <a href="#credentials" className="btn btn--outline projects-btn">
-              Explore credentials <ArrowUpRight size={16} />
+              {t("projects.exploreCredentials")} <ArrowUpRight size={16} />
             </a>
           </div>
 
@@ -204,12 +204,12 @@ export function Projects() {
                       rel="noopener noreferrer"
                       className="btn btn--primary project-modal__btn"
                     >
-                      Visit Project
+                      {t("projects.visitProject")}
                       <ExternalLink size={16} />
                     </a>
                   )}
                   <button className="btn btn--outline project-modal__btn" onClick={() => setSelectedProject(null)}>
-                    Close
+                    {t("projects.close")}
                   </button>
                 </div>
               </div>

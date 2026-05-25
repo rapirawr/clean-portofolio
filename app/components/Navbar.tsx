@@ -37,7 +37,7 @@ export function Navbar() {
 
   return (
     <>
-      <nav className={`navbar ${scrolled ? "navbar--scrolled" : ""}`} id="navbar">
+      <nav className={`navbar ${scrolled ? "navbar-scrolled" : ""}`} id="navbar">
         <div className="navbar__inner">
           <a href="#hero" className="navbar__logo" onClick={() => handleNavClick("#hero")}>
             <img src="/images/logo.png" alt="Rafi Abdillah" width={32} height={32} />

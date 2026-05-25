@@ -9,7 +9,8 @@ export function Statement() {
     <section className="section statement reveal">
       <div className="container">
         <h2 className="statement__heading">
-          {isToggled ? t("statement.premiumEnabled") : t("statement.standardReady")}{" "}
+          {t("statement.headText")}{" "} <br />
+          {isToggled ? t("statement.statEnabled") : t("statement.statDisabled")}{" "}
           <button
             className={`inline-toggle ${isToggled ? "inline-toggle--active" : ""}`}
             onClick={() => setIsToggled(!isToggled)}
@@ -20,7 +21,7 @@ export function Statement() {
               <span className="inline-toggle__thumb"></span>
             </span>
           </button>
-          {" "}{t("statement.aesthetic")}
+          {" "}{t("statement.on")}
         </h2>
         
         <p className="statement__subtitle" style={{ 

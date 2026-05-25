@@ -1,6 +1,6 @@
 import { useLanguage } from "~/context/LanguageContext";
 import { ArrowUpRight } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 
 // Lucide 1.0+ removed brand icons. Implementing custom SVG replacements.
 const Github = ({ size = 20, ...props }) => (
@@ -29,9 +29,26 @@ const Instagram = ({ size = 20, ...props }) => (
 export function Footer() {
   const { t } = useLanguage();
   const [mounted, setMounted] = useState(false);
+  const logoRef = useRef<HTMLHeadingElement>(null);
+  const topRef = useRef<HTMLSpanElement>(null);
+  const bottomRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLHeadingElement>) => {
+    const rect = logoRef.current?.getBoundingClientRect();
+    if (!rect || !topRef.current || !bottomRef.current) return;
+    const x = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+    topRef.current.style.clipPath = `inset(0 ${100 - x}% 0 0)`;
+    bottomRef.current.style.clipPath = `inset(0 0 0 ${x}%)`;
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    if (!topRef.current || !bottomRef.current) return;
+    topRef.current.style.clipPath = `inset(0 50% 0 0)`;
+    bottomRef.current.style.clipPath = `inset(0 0 0 50%)`;
   }, []);
 
   if (!mounted) return null;
@@ -41,12 +58,25 @@ export function Footer() {
       <div className="container footer__inner reveal">
         <div className="footer__main">
           <div className="footer__brand">
-            <h2 className="footer__logo-dynamic">
-              <span className="char">R</span>
-              <span className="char">a</span>
-              <span className="char">f</span>
-              <span className="char">i</span>
-              <span className="footer__logo-dot">.</span>
+            <h2
+              className="footer__logo-split"
+              ref={logoRef}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+              aria-label="Rafi."
+            >
+              <span
+                className="footer__logo-split-top"
+                ref={topRef}
+                style={{ clipPath: 'inset(0 50% 0 0)' }}
+                aria-hidden="true"
+              >Rafi.</span>
+              <span
+                className="footer__logo-split-bottom"
+                ref={bottomRef}
+                style={{ clipPath: 'inset(0 0 0 50%)' }}
+                aria-hidden="true"
+              >Rafi.</span>
             </h2>
             <p className="footer__tagline">
               {t("hero.tagline") || "Fullstack developer based in Indonesia."}

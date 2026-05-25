@@ -1901,60 +1901,35 @@ input, textarea { font: inherit; color: inherit; }
   max-width: 400px;
 }
 
-.footer__logo-dynamic {
-  display: flex;
-  align-items: baseline;
+.footer__logo-split {
+  position: relative;
   font-size: clamp(4rem, 14vw, 10rem);
-  line-height: 0.7;
-  letter-spacing: -0.08em;
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
   margin-bottom: 32px;
-  cursor: default;
+  cursor: crosshair;
   user-select: none;
-}
-
-.footer__logo-dynamic .char {
   display: inline-block;
-  transition: all 0.4s var(--ease);
 }
 
-/* Character 1: R - Bold, Sans, Large */
-.footer__logo-dynamic .char:nth-child(1) {
-  font-weight: 900;
-  text-transform: uppercase;
+.footer__logo-split-top,
+.footer__logo-split-bottom {
+  display: block;
+  white-space: nowrap;
 }
 
-/* Character 2: a - Light, Serif, Slightly shifted */
-.footer__logo-dynamic .char:nth-child(2) {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  transform: translateY(-0.05em);
-}
-
-/* Character 3: f - Medium, Sans */
-.footer__logo-dynamic .char:nth-child(3) {
-  font-weight: 600;
-  transform: translateX(-0.02em);
-}
-
-/* Character 4: i - Extra Bold, Accent color */
-.footer__logo-dynamic .char:nth-child(4) {
-  font-weight: 900;
+/* Left side: accent color */
+.footer__logo-split-top {
   color: var(--accent);
-  margin-left: -0.05em;
 }
 
-.footer__logo-dynamic .footer__logo-dot {
-  font-size: 0.8em;
+/* Right side: text color, stacked on top */
+.footer__logo-split-bottom {
   color: var(--text);
-  margin-left: -0.05em;
-}
-
-.footer__logo-dynamic:hover .char:nth-child(odd) {
-  transform: translateY(-10px) rotate(-2deg);
-}
-
-.footer__logo-dynamic:hover .char:nth-child(even) {
-  transform: translateY(5px) rotate(2deg);
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .footer__tagline {

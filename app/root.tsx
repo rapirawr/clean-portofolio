@@ -67,27 +67,31 @@ export default function App() {
       touchMultiplier: 2,
     });
 
+    let rafId: number;
     function raf(time: number) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
-    // Global Scroll Progress & Reveal Observer
-    const handleScroll = () => {
-      const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-      const progress = document.querySelector('.scroll-progress') as HTMLElement;
-      if (progress) progress.style.transform = `scaleX(${scrollPercent / 100})`;
-    };
+    // Lenis emit scroll event yang sync — gunakan ini untuk scroll progress
+    // agar tidak bentrok antara window.scrollY dan Lenis virtual scroll position
+    const progressEl = document.querySelector('.scroll-progress') as HTMLElement | null;
+
+    lenis.on('scroll', ({ progress }: { progress: number }) => {
+      if (progressEl) progressEl.style.transform = `scaleX(${progress})`;
+    });
 
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('reveal--active');
+          // Stop observing once revealed — tidak perlu terus aktif
+          revealObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
     // Initial scan
     const scanReveals = () => {
@@ -105,11 +109,10 @@ export default function App() {
     });
 
     mutationObserver.observe(document.body, { childList: true, subtree: true });
-    window.addEventListener('scroll', handleScroll);
 
     return () => {
+      cancelAnimationFrame(rafId);
       lenis.destroy();
-      window.removeEventListener('scroll', handleScroll);
       revealObserver.disconnect();
       mutationObserver.disconnect();
     };

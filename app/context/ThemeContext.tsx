@@ -30,7 +30,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const resolved = theme === "system" ? getSystemTheme() : theme;
     setResolvedTheme(resolved);
     document.documentElement.setAttribute("data-theme", resolved);
-    localStorage.setItem("portfolio-theme", theme);
+    // Hanya simpan ke localStorage jika bukan default awal
+    if (theme !== "system" || localStorage.getItem("portfolio-theme")) {
+      localStorage.setItem("portfolio-theme", theme);
+    }
   }, [theme]);
 
   useEffect(() => {

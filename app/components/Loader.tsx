@@ -1,24 +1,31 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function Loader() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
+  // Track timers so we can clean them up on unmount
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    // Lock scroll while loading
+    document.body.style.overflow = "hidden";
 
-    // Simulate load time
-    const timer = setTimeout(() => {
+    const t1 = setTimeout(() => {
       setIsLoaded(true);
-      setTimeout(() => {
+      const t2 = setTimeout(() => {
         setIsHidden(true);
-        document.body.style.overflow = '';
+        document.body.style.overflow = "";
       }, 1000);
+      timers.current.push(t2);
     }, 2000);
 
+    timers.current.push(t1);
+
     return () => {
-      clearTimeout(timer);
-      document.body.style.overflow = '';
+      // Always restore scroll on cleanup (unmount, HMR, etc.)
+      timers.current.forEach(clearTimeout);
+      timers.current = [];
+      document.body.style.overflow = "";
     };
   }, []);
 

@@ -1,6 +1,6 @@
 import { useLanguage } from "~/context/LanguageContext";
 import { GraduationCap, Briefcase, Rocket, Star } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 
 interface TimelineItem {
   dateKey: string;
@@ -45,65 +45,78 @@ export function Experience() {
   const svgWrapperRef = useRef<HTMLDivElement>(null);
   const nodeRefs = useRef<(HTMLDivElement | null)[]>([]);
   
-  const [activeNodes, setActiveNodes] = useState<boolean[]>(new Array(timelineItems.length).fill(false));
+  const [activeNodes, setActiveNodes] = useState<boolean[]>(
+    new Array(timelineItems.length).fill(false)
+  );
+
+  // Compute update outside setState to allow bail-out comparison without JSON.stringify
+  const activeNodesRef = useRef<boolean[]>(new Array(timelineItems.length).fill(false));
+
+  const updateTimeline = useCallback(() => {
+    if (!pathRef.current || !containerRef.current || !svgWrapperRef.current) return;
+
+    const container = containerRef.current;
+    const path = pathRef.current;
+    const svgWrapper = svgWrapperRef.current;
+
+    const rect = container.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    // Drawing tip at 60% of viewport
+    const drawingTipY = windowHeight * 0.6;
+
+    const elementTop = rect.top;
+    const elementHeight = rect.height;
+
+    let progress = (drawingTipY - elementTop) / elementHeight;
+    progress = Math.max(0, Math.min(1, progress));
+
+    const pathLength = path.getTotalLength();
+    path.style.strokeDasharray = `${pathLength}`;
+    path.style.strokeDashoffset = `${pathLength * (1 - progress)}`;
+
+    // Parallax
+    const centerOffset = (elementTop + elementHeight / 2) - (windowHeight / 2);
+    const parallaxMove = Math.max(-40, Math.min(40, centerOffset * -0.1));
+    svgWrapper.style.transform = `translateX(-50%) translateY(${parallaxMove}px)`;
+
+    // Node activation synced with drawing tip
+    let changed = false;
+    const newActiveNodes = timelineItems.map((_, index) => {
+      const node = nodeRefs.current[index];
+      if (!node) return false;
+      const nodeRect = node.getBoundingClientRect();
+      const nodeCenterY = nodeRect.top + nodeRect.height / 2;
+      return (drawingTipY - parallaxMove) >= nodeCenterY;
+    });
+
+    for (let i = 0; i < newActiveNodes.length; i++) {
+      if (newActiveNodes[i] !== activeNodesRef.current[i]) {
+        changed = true;
+        break;
+      }
+    }
+
+    if (changed) {
+      activeNodesRef.current = newActiveNodes;
+      setActiveNodes(newActiveNodes);
+    }
+  }, []);
 
   useEffect(() => {
-    let requestRef: number;
-    
-    const animate = () => {
-      if (!pathRef.current || !containerRef.current || !svgWrapperRef.current) {
-        requestRef = requestAnimationFrame(animate);
-        return;
-      }
+    // Run once on mount to set initial state
+    updateTimeline();
 
-      const container = containerRef.current;
-      const path = pathRef.current;
-      const svgWrapper = svgWrapperRef.current;
-      
-      const rect = container.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      
-      // Drawing tip at 60% of viewport, starts when roadmap is well in view
-      const drawingTipY = windowHeight * 0.6;
-      
-      const elementTop = rect.top;
-      const elementHeight = rect.height;
-      
-      // Progress starts only when top of roadmap div reaches drawingTipY
-      let progress = (drawingTipY - elementTop) / elementHeight;
-      progress = Math.max(0, Math.min(1, progress));
-      
-      const pathLength = path.getTotalLength();
-      path.style.strokeDasharray = `${pathLength}`;
-      path.style.strokeDashoffset = `${pathLength * (1 - progress)}`;
+    // Gunakan passive listener — Lenis tetap emit event scroll ke window
+    // sehingga getBoundingClientRect() tetap akurat
+    window.addEventListener("scroll", updateTimeline, { passive: true });
+    window.addEventListener("resize", updateTimeline, { passive: true });
 
-      // Parallax
-      const centerOffset = (elementTop + elementHeight / 2) - (windowHeight / 2);
-      const parallaxMove = Math.max(-40, Math.min(40, centerOffset * -0.1)); 
-      svgWrapper.style.transform = `translateX(-50%) translateY(${parallaxMove}px)`;
-
-      // Node activation synced with drawing tip
-      const newActiveNodes = timelineItems.map((_, index) => {
-        const node = nodeRefs.current[index];
-        if (!node) return false;
-        
-        const nodeRect = node.getBoundingClientRect();
-        const nodeCenterY = nodeRect.top + nodeRect.height / 2;
-        
-        return (drawingTipY - parallaxMove) >= nodeCenterY;
-      });
-      
-      setActiveNodes(prev => {
-        if (JSON.stringify(prev) === JSON.stringify(newActiveNodes)) return prev;
-        return newActiveNodes;
-      });
-      
-      requestRef = requestAnimationFrame(animate);
+    return () => {
+      window.removeEventListener("scroll", updateTimeline);
+      window.removeEventListener("resize", updateTimeline);
     };
-
-    requestRef = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(requestRef);
-  }, []);
+  }, [updateTimeline]);
 
   return (
     <section id="experience" className="section roadmap-section reveal">

@@ -96,7 +96,7 @@ export function Footer() {
               </span>
               <ArrowUpRight size={16} />
             </a>
-            <a href="https://instagram.com/rapikerenbgt" target="_blank" rel="noopener noreferrer" className="footer__social-link">
+            <a href="https://instagram.com/rraffi_af" target="_blank" rel="noopener noreferrer" className="footer__social-link">
               <span style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <Instagram /> Instagram
               </span>

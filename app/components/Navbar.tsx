@@ -270,18 +270,18 @@ export function Navbar() {
             {t("contact.label") || "Contact"}
           </a>
 
-          {/* Social Card */}
-          <div className="mobile-menu__card">
+          {/* Social Card — horizontal */}
+          <div className="mobile-menu__social-row">
             {socialLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mobile-menu__item"
+                className="mobile-menu__social-btn"
               >
-                <span className="mobile-menu__item-label">{link.label}</span>
-                <ArrowUpRight size={16} className="mobile-menu__item-icon" />
+                <span>{link.label}</span>
+                <ArrowUpRight size={13} />
               </a>
             ))}
           </div>

@@ -1,6 +1,6 @@
 import { useLanguage } from "~/context/LanguageContext";
 import { ArrowDown } from "lucide-react";
-import { SpiralDots } from "~/components/SpiralDots";
+import { SpiralDots } from "./SpiralDots";
 import { Magnetic } from "~/components/Magnetic";
 
 export function Hero() {

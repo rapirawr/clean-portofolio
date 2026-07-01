@@ -52,7 +52,7 @@ export function Contact() {
               <a href="https://www.linkedin.com/in/rafi-abdillah-f-9517a1329/" target="_blank" rel="noopener noreferrer" className="contact__social-link">
                 LinkedIn
               </a>
-              <a href="https://instagram.com/rapikerenbgt" target="_blank" rel="noopener noreferrer" className="contact__social-link">
+              <a href="https://instagram.com/rraffi_af" target="_blank" rel="noopener noreferrer" className="contact__social-link">
                 Instagram
               </a>
             </div>

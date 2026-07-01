@@ -12,6 +12,7 @@ import "./app.css";
 import { ThemeProvider } from "~/context/ThemeContext";
 import { LanguageProvider } from "~/context/LanguageContext";
 import { Loader } from "~/components/Loader";
+import { GamepadCursor } from "~/components/GamepadCursor";
 import { useEffect } from "react";
 import Lenis from "lenis";
 
@@ -123,6 +124,7 @@ export default function App() {
       <LanguageProvider>
         <div className="scroll-progress" />
         <Loader />
+        <GamepadCursor />
         <Outlet />
       </LanguageProvider>
     </ThemeProvider>

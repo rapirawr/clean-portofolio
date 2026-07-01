@@ -2,25 +2,45 @@ import { useEffect, useState, useRef } from "react";
 import { useTheme } from "~/context/ThemeContext";
 import { useLanguage } from "~/context/LanguageContext";
 
+// Track whether a trusted user gesture has been received.
+// Browsers require a real user interaction before allowing vibration.
+let hapticUnlocked = false;
+
 const playHaptic = (gpIndex: number, duration: number, weakMagnitude: number, strongMagnitude: number) => {
+  console.log("[haptic] called, unlocked:", hapticUnlocked, "gpIndex:", gpIndex);
+  if (!hapticUnlocked) {
+    console.warn("[haptic] blocked — not unlocked yet");
+    return;
+  }
+
   try {
-    // IMPORTANT: Must re-fetch gamepad every time — browser invalidates old references for security.
-    // Using a cached `gp` object will silently fail for vibration.
     const freshGp = navigator.getGamepads()[gpIndex] as any;
+    console.log("[haptic] freshGp:", freshGp);
     if (!freshGp) return;
 
+    console.log("[haptic] vibrationActuator:", freshGp.vibrationActuator);
+    console.log("[haptic] hapticActuators:", freshGp.hapticActuators);
+
     if (freshGp.vibrationActuator) {
-      freshGp.vibrationActuator.playEffect("dual-rumble", {
+      const result = freshGp.vibrationActuator.playEffect("dual-rumble", {
         startDelay: 0,
         duration,
         weakMagnitude,
         strongMagnitude,
       });
+      console.log("[haptic] playEffect result:", result);
+      if (result && typeof result.then === "function") {
+        result.then((r: string) => console.log("[haptic] resolved:", r))
+               .catch((e: any) => console.error("[haptic] rejected:", e));
+      }
     } else if (freshGp.hapticActuators && freshGp.hapticActuators.length > 0) {
+      console.log("[haptic] using hapticActuators[0].pulse");
       freshGp.hapticActuators[0].pulse(weakMagnitude, duration);
+    } else {
+      console.warn("[haptic] no actuator found on gamepad");
     }
   } catch (e) {
-    // Silently ignore if not supported
+    console.error("[haptic] exception:", e);
   }
 };
 
@@ -62,6 +82,12 @@ export function GamepadCursor() {
   }, [locale]);
 
   useEffect(() => {
+    // Unlock haptic on any trusted user gesture (required by browsers before vibration is allowed)
+    const unlockHaptic = () => { hapticUnlocked = true; };
+    window.addEventListener('click', unlockHaptic);
+    window.addEventListener('keydown', unlockHaptic);
+    window.addEventListener('pointerdown', unlockHaptic);
+
     // Initial center position on mount
     posRef.current = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
     setPos(posRef.current);
@@ -74,6 +100,11 @@ export function GamepadCursor() {
       const gp = Array.from(gamepads).find(g => g && g.connected);
 
       if (gp) {
+        // Unlock haptic on first any-button press (some browsers accept gamepad input as trusted gesture)
+        if (!hapticUnlocked && gp.buttons.some(b => b.pressed)) {
+          hapticUnlocked = true;
+        }
+
         // Left stick & D-pad movement
         const axes = gp.axes;
         const leftStickX = axes[0] || 0;
@@ -135,13 +166,12 @@ export function GamepadCursor() {
 
           if (isPressed && !wasPressed) {
             // Click action!
-            // Need to hide the cursor element itself so it doesn't block the click
-            // It will have pointer-events: none in CSS, but just in case:
             const element = document.elementFromPoint(posRef.current.x, posRef.current.y);
             
             if (element instanceof HTMLElement) {
               // Try to find nearest clickable parent if element itself isn't a link/button
               const clickableElement = element.closest('a, button, input, [role="button"], [tabindex]') as HTMLElement;
+              const isLink = !!element.closest('a');
               
               if (clickableElement) {
                 clickableElement.click();
@@ -150,8 +180,12 @@ export function GamepadCursor() {
                 element.click();
               }
               
-              // Haptic feedback for click
-              playHaptic(gp.index, 100, 0.8, 0.4);
+              // Stronger haptic for links, normal for other clickables
+              if (isLink) {
+                playHaptic(gp.index, 180, 1.0, 0.8);
+              } else {
+                playHaptic(gp.index, 100, 0.8, 0.4);
+              }
             }
           }
         }
@@ -272,6 +306,9 @@ export function GamepadCursor() {
       if (rAFRef.current) cancelAnimationFrame(rAFRef.current);
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('click', unlockHaptic);
+      window.removeEventListener('keydown', unlockHaptic);
+      window.removeEventListener('pointerdown', unlockHaptic);
       document.body.classList.remove('gamepad-active');
     };
   }, []);

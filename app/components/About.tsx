@@ -36,7 +36,7 @@ export function About() {
             position={[0, 0, 13]}
             gravity={[0, -40, 0]}
             fov={15}
-            frontImage="/images/hero.webp"
+            frontImage="/images/hero.webp "
             backImage="/images/logo2.png"
             imageFit="cover"
           />

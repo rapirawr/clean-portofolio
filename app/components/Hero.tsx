@@ -2,6 +2,7 @@ import { useLanguage } from "~/context/LanguageContext";
 import { ArrowDown } from "lucide-react";
 import { SpiralDots } from "./SpiralDots";
 import { Magnetic } from "~/components/Magnetic";
+import TextPressure from "~/components/TextPressure";
 
 export function Hero() {
   const { t } = useLanguage();
@@ -23,17 +24,20 @@ export function Hero() {
         </div>
         
         <div className="hero__typography">
-          <h1 className="hero__name">
-            <span className="name-main">{t("hero.name")}</span>
-            {/* <span className="name-styled">Developer.</span> */}
-          </h1>
-          
-          {/* <div className="hero__description">
-            <p className="hero__tagline">
-              ENGINEERING <span className="serif-text">HIGH-FIDELITY</span> <br />
-              DIGITAL EXPERIENCES
-            </p>
-          </div> */}
+          <div className="hero__name-pressure">
+            <TextPressure
+              text={t("hero.name")}
+              flex
+              alpha={false}
+              stroke={false}
+              weight
+              width
+              italic
+              textColor="var(--text)"
+              strokeColor="var(--accent)"
+              minFontSize={72}
+            />
+          </div>
         </div>
 
         <div className="hero__actions">

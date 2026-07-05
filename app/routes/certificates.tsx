@@ -1,11 +1,13 @@
 import { useLanguage } from "~/context/LanguageContext";
-import { ArrowLeft, X, ZoomIn } from "lucide-react";
+import { ArrowLeft, X, ZoomIn, Grid, Orbit } from "lucide-react";
 import { Link } from "react-router";
 import { useState, useEffect } from "react";
+import InfiniteMenu from "~/components/InfiniteMenu";
 
 export default function CertificatesPage() {
   const { t } = useLanguage();
   const [selectedCert, setSelectedCert] = useState<any>(null);
+  const [viewMode, setViewMode] = useState<"grid" | "infinite">("grid");
 
   useEffect(() => {
     if (selectedCert) {
@@ -180,60 +182,118 @@ export default function CertificatesPage() {
     }
   ];
 
+  const menuItems = allCerts.map((cert) => ({
+    image: cert.src,
+    link: cert.src,
+    title: cert.title,
+    description: cert.issuer,
+  }));
+
   return (
     <div className="page-container certificates-page">
-      <header className="page-header">
-        <Link to="/" className="back-link">
-          <ArrowLeft size={20} />
-          <span>Back to Home</span>
-        </Link>
-        <h1 className="page-title">{t("credentials.title")}</h1>
+      <header className="page-header" style={{ marginBottom: "40px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", flexWrap: "wrap", gap: "16px", marginBottom: "20px" }}>
+          <Link to="/" className="back-link" style={{ margin: 0 }}>
+            <ArrowLeft size={20} />
+            <span>Back to Home</span>
+          </Link>
+
+          <div style={{ display: "flex", gap: "6px", background: "var(--card-bg)", padding: "4px", borderRadius: "100px", border: "1px solid var(--border)" }}>
+            <button
+              onClick={() => setViewMode("grid")}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "6px",
+                padding: "8px 16px",
+                fontSize: "13px",
+                fontWeight: 600,
+                borderRadius: "100px",
+                cursor: "pointer",
+                background: viewMode === "grid" ? "var(--accent)" : "transparent",
+                color: viewMode === "grid" ? "white" : "var(--text-secondary)",
+                transition: "all 0.3s ease",
+                border: "none"
+              }}
+            >
+              <Grid size={15} />
+              <span>Grid View</span>
+            </button>
+            <button
+              onClick={() => setViewMode("infinite")}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "6px",
+                padding: "8px 16px",
+                fontSize: "13px",
+                fontWeight: 600,
+                borderRadius: "100px",
+                cursor: "pointer",
+                background: viewMode === "infinite" ? "var(--accent)" : "transparent",
+                color: viewMode === "infinite" ? "white" : "var(--text-secondary)",
+                transition: "all 0.3s ease",
+                border: "none"
+              }}
+            >
+              <Orbit size={15} />
+              <span>3D Sphere</span>
+            </button>
+          </div>
+        </div>
+        <h1 className="page-title" style={{ marginTop: 0 }}>{t("credentials.title")}</h1>
         <p className="page-subtitle">{t("credentials.desc")}</p>
       </header>
 
-      <div className="certificates-grid">
-        {allCerts.map((cert, i) => (
-          <div key={i} className="cert-window" onClick={() => setSelectedCert(cert)}>
-            <div className="cert-window__header">
-              <div className="cert-window__dots">
-                <span className="dot"></span>
-                <span className="dot"></span>
-                <span className="dot"></span>
+      {viewMode === "grid" ? (
+        <div className="certificates-grid">
+          {allCerts.map((cert, i) => (
+            <div key={i} className="cert-window" onClick={() => setSelectedCert(cert)}>
+              <div className="cert-window__header">
+                <div className="cert-window__dots">
+                  <span className="dot"></span>
+                  <span className="dot"></span>
+                  <span className="dot"></span>
+                </div>
+                <span className="cert-window__title">certification_{i+1}.pdf</span>
               </div>
-              <span className="cert-window__title">certification_{i+1}.pdf</span>
-            </div>
-            <div className="cert-window__body">
-              <div className="cert-flip-card">
-                <div className="cert-flip-inner">
-                  <div className="cert-flip-front">
-                    <div className="cert-info-main">
-                      <span className="cert-category-tag">{cert.category.toUpperCase()}</span>
-                      <h3 className="cert-title">{cert.title}</h3>
-                      <div className="cert-meta">
-                        <div className="meta-item">
-                          <span className="label">ISSUER</span>
-                          <span className="value">{cert.issuer}</span>
-                        </div>
-                        <div className="meta-item">
-                          <span className="label">DATE</span>
-                          <span className="value">{cert.date}</span>
+              <div className="cert-window__body">
+                <div className="cert-flip-card">
+                  <div className="cert-flip-inner">
+                    <div className="cert-flip-front">
+                      <div className="cert-info-main">
+                        <span className="cert-category-tag">{cert.category.toUpperCase()}</span>
+                        <h3 className="cert-title">{cert.title}</h3>
+                        <div className="cert-meta">
+                          <div className="meta-item">
+                            <span className="label">ISSUER</span>
+                            <span className="value">{cert.issuer}</span>
+                          </div>
+                          <div className="meta-item">
+                            <span className="label">DATE</span>
+                            <span className="value">{cert.date}</span>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="cert-flip-back">
-                    <img src={cert.src} alt={cert.title} />
-                    <div className="cert-view-hint">
-                      <ZoomIn size={20} />
-                      <span>Click to enlarge</span>
+                    <div className="cert-flip-back">
+                      <img src={cert.src} alt={cert.title} />
+                      <div className="cert-view-hint">
+                        <ZoomIn size={20} />
+                        <span>Click to enlarge</span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div style={{ height: "650px", position: "relative", width: "100%", borderRadius: "16px", overflow: "hidden", background: "#050505", border: "1px solid var(--border)" }}>
+          <InfiniteMenu items={menuItems} scale={1.0} />
+        </div>
+      )}
 
       {/* MODAL */}
       {selectedCert && (

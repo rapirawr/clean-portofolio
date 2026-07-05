@@ -1,5 +1,5 @@
 import { useLanguage } from "~/context/LanguageContext";
-import { Code2, MonitorPlay, Layers, Paintbrush } from "lucide-react";
+import Lanyard from "~/components/Lanyard";
 
 export function About() {
   const { t } = useLanguage();
@@ -15,11 +15,6 @@ export function About() {
       <div className="container about-f__container">
         {/* Left Side */}
         <div className="about-f__content">
-          {/* <div className="about-f__header">
-            <span className="about-f__number">05</span>
-            <span className="about-f__label"> ABOUT ME</span>
-          </div> */}
-          
           <h2 className="about-f__title">
             {t("about.titleHeader").split(" ").map((word, i, arr) => (
               <span key={i}>{word}{i < arr.length - 1 && <br />}</span>
@@ -35,22 +30,18 @@ export function About() {
           </div>
         </div>
         
-        {/* Right Side */}
+        {/* Right Side — Lanyard */}
         <div className="about-f__visual">
-          {/* Main portrait image (you can use hero.webp or a similar one) */}
-          <img src="/images/hero.webp" alt="Rafi Abdillah" className="about-f__img" />
+          <Lanyard
+            position={[0, 0, 13]}
+            gravity={[0, -40, 0]}
+            fov={15}
+            frontImage="/images/hero.webp"
+            backImage="/images/logo2.png"
+            imageFit="cover"
+          />
         </div>
       </div>
-
-      {/* Bottom Orange Angled Bar */}
-      {/* <div className="about-f__bottom-bar"> */}
-        {/* <div className="about-f__bottom-inner">
-          <div className="about-f__logo"><Code2 size={24} /> React.js</div>
-          <div className="about-f__logo"><MonitorPlay size={24} /> Remix</div>
-          <div className="about-f__logo"><Layers size={24} /> Laravel</div>
-          <div className="about-f__logo"><Paintbrush size={24} /> Tailwind</div>
-        </div> */}
-      {/* </div> */}
     </section>
   );
 }

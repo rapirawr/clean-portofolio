@@ -4,6 +4,7 @@ import { useTheme } from "~/context/ThemeContext";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { Menu, X, ArrowUpRight } from "lucide-react";
+import GooeyNav from "./GooeyNav";
 
 const navItems = [
   { key: "nav.home", href: "#hero" },
@@ -45,11 +46,45 @@ export function Navbar() {
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
 
+  const [activeIndex, setActiveIndex] = useState(0);
+  const isClickScrolling = useRef(false);
+  const clickTimeout = useRef<NodeJS.Timeout | null>(null);
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    // Use IntersectionObserver to track which section is in view
+    const observers: IntersectionObserver[] = [];
+
+    navItems.forEach((item, idx) => {
+      const el = document.querySelector(item.href);
+      if (!el) return;
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (isClickScrolling.current) return;
+          if (entry.isIntersecting) {
+            setActiveIndex(idx);
+          }
+        },
+        {
+          // Section triggers when it enters the top 30% of viewport
+          rootMargin: "-10% 0px -60% 0px",
+          threshold: 0,
+        }
+      );
+
+      observer.observe(el);
+      observers.push(observer);
+    });
+
+    return () => observers.forEach((obs) => obs.disconnect());
+  }, []);
+
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
@@ -130,8 +165,18 @@ export function Navbar() {
   }, [closeSheet]);
 
   // ─── Nav click ────────────────────────────────────────────────────
-  const handleNavClick = useCallback((href: string) => {
+  const handleNavClick = useCallback((href: string, index?: number) => {
     closeSheet();
+
+    // Disable scroll spy temporarily
+    isClickScrolling.current = true;
+    if (index !== undefined) setActiveIndex(index);
+
+    if (clickTimeout.current) clearTimeout(clickTimeout.current);
+    clickTimeout.current = setTimeout(() => {
+      isClickScrolling.current = false;
+    }, 1200); // Wait for smooth scroll to finish
+
     const el = document.querySelector(href);
     if (el) el.scrollIntoView({ behavior: "smooth" });
   }, [closeSheet]);
@@ -154,22 +199,19 @@ export function Navbar() {
             />
           </a>
 
-          <ul className="navbar__links">
-            {navItems.map((item) => (
-              <li key={item.key}>
-                <a
-                  href={item.href}
-                  className="navbar__link"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick(item.href);
-                  }}
-                >
-                  {t(item.key)}
-                </a>
-              </li>
-            ))}
-          </ul>
+          <div className="navbar__links">
+            <GooeyNav
+              activeIndex={activeIndex}
+              items={navItems.map((item) => ({
+                label: t(item.key),
+                href: item.href,
+              }))}
+              onItemClick={(e, item, idx) => {
+                e.preventDefault();
+                handleNavClick(item.href, idx);
+              }}
+            />
+          </div>
 
           <div className="navbar__actions">
             <div className="navbar__desktop-controls">
@@ -252,7 +294,7 @@ export function Navbar() {
                 style={{ animationDelay: mobileOpen ? `${i * 40}ms` : "0ms" }}
                 onClick={(e) => {
                   e.preventDefault();
-                  handleNavClick(item.href);
+                  handleNavClick(item.href, navItems.findIndex(n => n.key === item.key));
                 }}
               >
                 <span className="mobile-menu__item-label">{t(item.key)}</span>

@@ -30,6 +30,7 @@ export default defineConfig({
         ]
       },
       workbox: {
+        maximumFileSizeToCacheInBytes: 4 * 1024 * 1024, // 4 MB — covers rapier.js (2.24 MB)
         runtimeCaching: [
           {
             urlPattern: ({ request }) => request.destination === "image",

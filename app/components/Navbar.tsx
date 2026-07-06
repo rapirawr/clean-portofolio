@@ -57,6 +57,10 @@ export function Navbar() {
   }, []);
 
   useEffect(() => {
+    console.log(scrolled ? 'Navbar blur applied' : 'Navbar blur removed');
+  }, [scrolled]);
+
+  useEffect(() => {
     // Use IntersectionObserver to track which section is in view
     const observers: IntersectionObserver[] = [];
 

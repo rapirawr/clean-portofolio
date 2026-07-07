@@ -2,6 +2,7 @@ import { useLanguage } from "~/context/LanguageContext";
 import { ArrowDown } from "lucide-react";
 import { SpiralDots } from "./SpiralDots";
 import { Magnetic } from "~/components/Magnetic";
+import TextPressure from "~/components/TextPressure";
 
 
 export function Hero() {
@@ -24,7 +25,21 @@ export function Hero() {
         </div>
         
         <div className="hero__typography">
-          <h1 className="hero__name">{t("hero.name")}</h1>
+          <div className="hero__name-pressure">
+            <TextPressure
+              text={t("hero.name")}
+              flex
+              alpha={false}
+              stroke={false}
+              weight
+              width
+              italic
+              scale
+              textColor="var(--text)"
+              strokeColor="var(--accent)"
+              minFontSize={36}
+            />
+          </div>
         </div>
 
         <div className="hero__actions">

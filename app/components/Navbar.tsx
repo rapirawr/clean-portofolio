@@ -18,12 +18,10 @@ const navItems = [
 const socialLinks = [
   { label: "GitHub", href: "https://github.com/rapirawr" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/rafi-abdillah-f-9517a1329/" },
-  { label: "Instagram", href: "https://instagram.com/rapikerenbgt" },
+  { label: "Instagram", href: "https://instagram.com/rraffi_af" },
 ];
 
-// Threshold: jika di-drag lebih dari ini (px), sheet akan tutup
 const DRAG_CLOSE_THRESHOLD = 120;
-// Threshold velocity: jika flick cepat ke bawah, langsung tutup
 const VELOCITY_THRESHOLD = 0.5;
 
 export function Navbar() {

@@ -10,6 +10,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "nav.projects": "Projects",
     "nav.contact": "Contact",
     "nav.credentials": "Credentials",
+    "nav.stats": "Stats",
 
     // Hero
     "hero.greeting": "Hello, I'm",
@@ -96,6 +97,20 @@ export const translations: Record<Locale, Record<string, string>> = {
     "credentials.desc": "A comprehensive collection of verified technical certifications, competition awards, and academic achievements.",
     "credentials.viewAll": "View Full Archive",
 
+    // Stats
+    "stats.label": "Developer Stats",
+    "stats.githubTitle": "GitHub Profile",
+    "stats.wakatimeTitle": "WakaTime Activity",
+    "stats.repos": "Repositories",
+    "stats.followers": "Followers",
+    "stats.stars": "Total Stars",
+    "stats.languages": "Top Languages",
+    "stats.editors": "Preferred Editors",
+    "stats.loading": "Syncing developer data...",
+    "stats.weeklyHours": "Weekly Coding",
+    "stats.mockIndicator": "Sample Data",
+    "stats.liveIndicator": "Live",
+
     // Contact
     "contact.label": "Get in Touch",
     "contact.title": "Let's work together.",
@@ -128,6 +143,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "nav.projects": "Proyek",
     "nav.contact": "Kontak",
     "nav.credentials": "Sertifikat",
+    "nav.stats": "Statistik",
 
     // Hero
     "hero.greeting": "Halo, Saya",
@@ -213,6 +229,20 @@ export const translations: Record<Locale, Record<string, string>> = {
     "credentials.title": "Arsip Sertifikasi",
     "credentials.desc": "Koleksi lengkap sertifikasi teknis terverifikasi, penghargaan kompetisi, dan pencapaian akademik.",
     "credentials.viewAll": "Lihat Semua Arsip",
+
+    // Stats
+    "stats.label": "Statistik Developer",
+    "stats.githubTitle": "Profil GitHub",
+    "stats.wakatimeTitle": "Aktivitas WakaTime",
+    "stats.repos": "Repositori",
+    "stats.followers": "Pengikut",
+    "stats.stars": "Total Bintang",
+    "stats.languages": "Bahasa Teratas",
+    "stats.editors": "Editor Pilihan",
+    "stats.loading": "Sinkronisasi data developer...",
+    "stats.weeklyHours": "Coding Mingguan",
+    "stats.mockIndicator": "Data Sampel",
+    "stats.liveIndicator": "Live",
 
     // Contact
     "contact.label": "Hubungi Saya",

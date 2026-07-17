@@ -1,6 +1,18 @@
+import type { MetaFunction } from "react-router";
 import { useLanguage } from "~/context/LanguageContext";
 import { ArrowLeft, Mail, Phone, MapPin, Download, Link as LinkIcon } from "lucide-react";
 import { Link } from "react-router";
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Curriculum Vitae | Rafi Abdillah F" },
+    { name: "description", content: "Professional CV and experience of Rafi Abdillah F, Software Engineer." },
+    { property: "og:title", content: "Curriculum Vitae | Rafi Abdillah F" },
+    { property: "og:description", content: "Professional CV and experience of Rafi Abdillah F, Software Engineer." },
+    { property: "og:type", content: "website" },
+    { property: "og:image", content: "https://rapirawr.my.id/images/favicon.png" },
+  ];
+};
 
 export default function CVPage() {
   const { t } = useLanguage();

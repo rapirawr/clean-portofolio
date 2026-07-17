@@ -12,6 +12,7 @@ const navItems = [
   { key: "nav.experience", href: "#experience" },
   { key: "nav.skills", href: "#skills" },
   { key: "nav.projects", href: "#projects" },
+  { key: "nav.stats", href: "#stats" },
   { key: "nav.contact", href: "#contact" },
 ];
 

@@ -1,8 +1,20 @@
+import type { MetaFunction } from "react-router";
 import { useLanguage } from "~/context/LanguageContext";
 import { ArrowLeft, X, ZoomIn, Grid, Orbit } from "lucide-react";
 import { Link } from "react-router";
 import { useState, useEffect } from "react";
 import InfiniteMenu from "~/components/InfiniteMenu";
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Certifications | Rafi Abdillah F" },
+    { name: "description", content: "Archive of verified technical certifications, awards, and achievements of Rafi Abdillah F." },
+    { property: "og:title", content: "Certifications | Rafi Abdillah F" },
+    { property: "og:description", content: "Archive of verified technical certifications, awards, and achievements of Rafi Abdillah F." },
+    { property: "og:type", content: "website" },
+    { property: "og:image", content: "https://rapirawr.my.id/images/favicon.png" },
+  ];
+};
 
 export default function CertificatesPage() {
   const { t } = useLanguage();

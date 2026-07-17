@@ -10,15 +10,29 @@ export function Contact() {
     e.preventDefault();
     setStatus("sending");
 
-    // Simulate form submission (replace with actual emailjs or API call)
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const subject = formData.get("subject") as string;
+    const message = formData.get("message") as string;
+
+    // Submit form data to Netlify function
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      setStatus("success");
-      (e.target as HTMLFormElement).reset();
-      setTimeout(() => setStatus("idle"), 4000);
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, subject, message }),
+      });
+      if (!response.ok) throw new Error('Network response was not ok');
+      setStatus('success');
+      form.reset();
+      setTimeout(() => setStatus('idle'), 4000);
     } catch {
-      setStatus("error");
-      setTimeout(() => setStatus("idle"), 4000);
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 4000);
     }
   };
 

@@ -5,6 +5,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLocation,
 } from "react-router";
 
 import type { Route } from "./+types/root";
@@ -15,6 +16,7 @@ import { Loader } from "~/components/Loader";
 import { GamepadCursor } from "~/components/GamepadCursor";
 import { useEffect } from "react";
 import Lenis from "lenis";
+import { motion, AnimatePresence } from "framer-motion";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -119,13 +121,25 @@ export default function App() {
     };
   }, []);
 
+  const location = useLocation();
+
   return (
     <ThemeProvider>
       <LanguageProvider>
         <div className="scroll-progress" />
         <Loader />
         <GamepadCursor />
-        <Outlet />
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={location.pathname}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            <Outlet />
+          </motion.div>
+        </AnimatePresence>
       </LanguageProvider>
     </ThemeProvider>
   );

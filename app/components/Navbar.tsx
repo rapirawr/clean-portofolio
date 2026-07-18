@@ -50,42 +50,32 @@ export function Navbar() {
   const clickTimeout = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 40);
 
-  useEffect(() => {
-    console.log(scrolled ? 'Navbar blur applied' : 'Navbar blur removed');
-  }, [scrolled]);
+      if (isClickScrolling.current) return;
 
-  useEffect(() => {
-    // Use IntersectionObserver to track which section is in view
-    const observers: IntersectionObserver[] = [];
+      // Determine active section based on viewport scanning line (1/3 from top of viewport)
+      const scrollPosition = window.scrollY + window.innerHeight / 3;
 
-    navItems.forEach((item, idx) => {
-      const el = document.querySelector(item.href);
-      if (!el) return;
-
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (isClickScrolling.current) return;
-          if (entry.isIntersecting) {
-            setActiveIndex(idx);
+      for (let i = navItems.length - 1; i >= 0; i--) {
+        const el = document.querySelector(navItems[i].href);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          const top = rect.top + window.scrollY;
+          if (scrollPosition >= top) {
+            setActiveIndex(i);
+            break;
           }
-        },
-        {
-          // Section triggers when it enters the top 30% of viewport
-          rootMargin: "-10% 0px -60% 0px",
-          threshold: 0,
         }
-      );
+      }
+    };
 
-      observer.observe(el);
-      observers.push(observer);
-    });
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    // Call once initially to set the active index on mount
+    handleScroll();
 
-    return () => observers.forEach((obs) => obs.disconnect());
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
 

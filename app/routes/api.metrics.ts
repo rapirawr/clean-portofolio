@@ -4,7 +4,7 @@ import { getMetricsForBucket } from "~/utils/metrics.server";
 export async function loader({ request }: LoaderFunctionArgs) {
   // Security verification using token
   const expectedToken = process.env.METRICS_TOKEN;
-  if (expectedToken) {
+  if (expectedToken && expectedToken !== "your-secure-token") {
     const requestToken = request.headers.get("X-Metrics-Token");
     if (requestToken !== expectedToken) {
       return data(

@@ -17,16 +17,26 @@ export function Contact() {
     const subject = formData.get("subject") as string;
     const message = formData.get("message") as string;
 
-    // Submit form data to Netlify function
+    // Submit form data directly from the client side to Web3Forms API (required for Free Tier)
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
+      const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || "fa7f84f9-0314-4a3a-bf9e-c85f84f92f81";
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
+          Accept: "application/json",
         },
-        body: JSON.stringify({ name, email, subject, message }),
+        body: JSON.stringify({
+          access_key: accessKey,
+          name,
+          email,
+          subject: `[Portfolio] ${subject}`,
+          message,
+          from_name: `${name} (via Portfolio)`,
+        }),
       });
-      if (!response.ok) throw new Error('Network response was not ok');
+      const result = await response.json();
+      if (!response.ok || !result.success) throw new Error(result.message || "Network response was not ok");
       setStatus('success');
       form.reset();
       setTimeout(() => setStatus('idle'), 4000);

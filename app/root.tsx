@@ -17,6 +17,9 @@ import { GamepadCursor } from "~/components/GamepadCursor";
 import { useEffect } from "react";
 import Lenis from "lenis";
 import { motion, AnimatePresence } from "framer-motion";
+import { trackMetricsMiddleware } from "~/middleware/trackMetrics.server";
+
+export const middleware = [trackMetricsMiddleware];
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },

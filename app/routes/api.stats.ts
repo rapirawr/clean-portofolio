@@ -85,13 +85,17 @@ export async function loader({ request }: LoaderFunctionArgs) {
   // 3. Fetch WakaTime Stats if API key exists
   if (wakatimeApiKey) {
     try {
-      const base64Key = Buffer.from(wakatimeApiKey).toString("base64");
+      const base64Key = Buffer.from(`${wakatimeApiKey}:`).toString("base64");
       // Use summaries endpoint which is calculated in real-time and doesn't have 24-hour delay
       const wakaRes = await fetch("https://wakatime.com/api/v1/users/current/summaries?range=last_7_days", {
         headers: {
           Authorization: `Basic ${base64Key}`,
         },
       });
+
+      if (!wakaRes.ok) {
+        console.error("WakaTime API error:", wakaRes.status, await wakaRes.text());
+      }
 
       if (wakaRes.ok) {
         const summaries = await wakaRes.json();

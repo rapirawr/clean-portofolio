@@ -313,9 +313,9 @@ export async function loader({ request }: LoaderFunctionArgs) {
     if (result && result.contributions && result.contributions.length > 0) {
       const { currentStreak, longestStreak } = calculateStreaks(result.contributions);
       
-      // Slice the last 16 weeks to keep the payload size small and fit in UI
+      // Slice the last 52 weeks to show a full year of contribution history
       const totalWeeks = result.contributions.length;
-      const slicedWeeks = result.contributions.slice(Math.max(0, totalWeeks - 16));
+      const slicedWeeks = result.contributions.slice(Math.max(0, totalWeeks - 52));
 
       contributionsData = {
         total: result.totalContributions,

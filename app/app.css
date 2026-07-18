@@ -2858,4 +2858,97 @@ body.gamepad-active * {
   }
 }
 
+/* ===== GITHUB CONTRIBUTIONS CARD ===== */
+.stats-card--contributions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.stats-card__contrib-summary {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 24px;
+}
+
+.stats-card__contrib-summary-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stats-card__contrib-streak-icon {
+  opacity: 0.8;
+}
+
+.stats-card__contrib-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.1;
+  display: block;
+}
+
+.stats-card__contrib-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+  display: block;
+}
+
+.stats-card__contrib-graph-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.stats-card__contrib-graph {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-soft) transparent;
+}
+
+.stats-card__contrib-column {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stats-card__contrib-day {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  transition: transform 0.15s var(--ease);
+  cursor: pointer;
+}
+
+.stats-card__contrib-day:hover {
+  transform: scale(1.3);
+  z-index: 10;
+}
+
+.stats-card__contrib-legend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.stats-card__contrib-legend-color {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+
 

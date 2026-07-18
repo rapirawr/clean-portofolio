@@ -110,6 +110,11 @@ export const translations: Record<Locale, Record<string, string>> = {
     "stats.weeklyHours": "Weekly Coding",
     "stats.mockIndicator": "Sample Data",
     "stats.liveIndicator": "Live",
+    "stats.contributionsTitle": "GitHub Contributions",
+    "stats.totalContributions": "Total Contributions (Year)",
+    "stats.currentStreak": "Current Streak",
+    "stats.longestStreak": "Longest Streak",
+    "stats.days": "days",
 
     // Contact
     "contact.label": "Get in Touch",
@@ -243,6 +248,11 @@ export const translations: Record<Locale, Record<string, string>> = {
     "stats.weeklyHours": "Coding Mingguan",
     "stats.mockIndicator": "Data Sampel",
     "stats.liveIndicator": "Live",
+    "stats.contributionsTitle": "Kontribusi GitHub",
+    "stats.totalContributions": "Total Kontribusi (Tahunan)",
+    "stats.currentStreak": "Streak Saat Ini",
+    "stats.longestStreak": "Streak Terpanjang",
+    "stats.days": "hari",
 
     // Contact
     "contact.label": "Hubungi Saya",

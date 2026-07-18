@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLanguage } from "~/context/LanguageContext";
-import { Code, Star, Users, Laptop, Clock, Activity } from "lucide-react";
+import { Code, Star, Users, Laptop, Clock, Activity, GitCommit, Flame } from "lucide-react";
 
 const Github = ({ size = 20, ...props }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -27,9 +27,18 @@ interface WakaTimeData {
   isMock: boolean;
 }
 
+interface ContributionsData {
+  total: number;
+  currentStreak: number;
+  longestStreak: number;
+  weeks: { color: string; contributionCount: number; date: string }[][];
+  isMock: boolean;
+}
+
 interface StatsResponse {
   github: GithubData;
   wakatime: WakaTimeData;
+  contributions: ContributionsData;
 }
 
 export function StatsWidget() {
@@ -227,6 +236,68 @@ export function StatsWidget() {
               </div>
             </div>
           </div>
+
+          {/* Contributions Card */}
+          {stats.contributions && (
+            <div className="stats-card stats-card--contributions">
+              <div className="stats-card__header">
+                <div className="stats-card__title-wrap">
+                  <GitCommit size={20} className="stats-card__icon text-accent" />
+                  <h3 className="stats-card__title">{t("stats.contributionsTitle")}</h3>
+                </div>
+                <span className="stats-card__badge stats-card__badge--live">
+                  {t("stats.liveIndicator")}
+                </span>
+              </div>
+
+              <div className="stats-card__contrib-summary">
+                <div className="stats-card__contrib-summary-item">
+                  <span className="stats-card__contrib-value">{stats.contributions.total}</span>
+                  <span className="stats-card__contrib-label">{t("stats.totalContributions")}</span>
+                </div>
+                <div className="stats-card__contrib-summary-item">
+                  <Flame size={18} className="stats-card__contrib-streak-icon text-accent" />
+                  <div>
+                    <span className="stats-card__contrib-value">{stats.contributions.currentStreak} {t("stats.days")}</span>
+                    <span className="stats-card__contrib-label">{t("stats.currentStreak")}</span>
+                  </div>
+                </div>
+                <div className="stats-card__contrib-summary-item">
+                  <Star size={18} className="stats-card__contrib-streak-icon text-accent" />
+                  <div>
+                    <span className="stats-card__contrib-value">{stats.contributions.longestStreak} {t("stats.days")}</span>
+                    <span className="stats-card__contrib-label">{t("stats.longestStreak")}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="stats-card__contrib-graph-wrapper">
+                <div className="stats-card__contrib-graph">
+                  {stats.contributions.weeks.map((week, wIndex) => (
+                    <div key={wIndex} className="stats-card__contrib-column">
+                      {week.map((day, dIndex) => (
+                        <div
+                          key={dIndex}
+                          className="stats-card__contrib-day"
+                          style={{ backgroundColor: day.color || "#ebedf0" }}
+                          title={`${day.contributionCount} contributions on ${day.date}`}
+                        ></div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+                <div className="stats-card__contrib-legend">
+                  <span>Less</span>
+                  <div className="stats-card__contrib-legend-color" style={{ backgroundColor: "#ebedf0" }}></div>
+                  <div className="stats-card__contrib-legend-color" style={{ backgroundColor: "#9be9a8" }}></div>
+                  <div className="stats-card__contrib-legend-color" style={{ backgroundColor: "#40c463" }}></div>
+                  <div className="stats-card__contrib-legend-color" style={{ backgroundColor: "#30a14e" }}></div>
+                  <div className="stats-card__contrib-legend-color" style={{ backgroundColor: "#216e39" }}></div>
+                  <span>More</span>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </section>
